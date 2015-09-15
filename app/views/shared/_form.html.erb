@@ -1,0 +1,33 @@
+<form action="<%= @cat.persisted? ? cat_url(@cat) : cats_url %>" method="post">
+  <input type="hidden" name="_method" value="PATCH" if @cat.persisted?>
+  <p>Name:</p>
+  <p><input type="text" name="cat[name]" value="<%= @cat.name %>"></p>
+
+  <p>Birthdate:</p>
+  <p><input type="date" name="cat[birth_date]" value="<%= @cat.birth_date %>"</p>
+
+  <p><input type="radio"
+            name="cat[sex]"
+            <%= checked="checked" if @cat.sex == "M"%>
+            value="M"> Male</p>
+
+  <p><input type="radio"
+            name="cat[sex]"
+            <%= checked="checked" if @cat.sex == "F"%>
+            value="F"> Female</p>
+
+  <p>Color:
+    <select name="cat[color]">
+    <% @cat.class.color.each do |color| %>
+      <option <%= selected="selected" if color == @cat.color %>>
+        <%= color %>
+      </option>
+    <% end %>
+    </select>
+  </p>
+
+  <p>Description</p>
+  <p><textarea rows="5" cols="20" name="cat[description]"> <%= @cat.description %></textarea></p>
+
+  <input type="submit">
+</form>
