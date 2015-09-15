@@ -1,5 +1,8 @@
 <form action="<%= @cat.persisted? ? cat_url(@cat) : cats_url %>" method="post">
-  <input type="hidden" name="_method" value="PATCH" if @cat.persisted?>
+  <% if @cat.persisted? %>
+    <input type="hidden" name="_method" value="PATCH">
+  <% end %>
+
   <p>Name:</p>
   <p><input type="text" name="cat[name]" value="<%= @cat.name %>"></p>
 
