@@ -1,3 +1,6 @@
+<%= link_to "Back to index", cats_url %>
+
+<%= render partial: "layouts/errors" %>
 <h1>Cat Rental Form</h1>
 
 <form action="<%= cat_rental_requests_url %>" method="post">
@@ -5,8 +8,9 @@
   <select name="cat_rental_request[cat_id]">
     <option></option>
     <% @all_cats.each do |cat| %>
+      <% selected = @cat_rental.cat_id == cat.id %>
       <option value="<%= cat.id %>">
-        <%= cat.name %>
+      <%= cat.name %>
       </option>
     <% end %>
   </select>

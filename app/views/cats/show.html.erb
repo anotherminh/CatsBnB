@@ -1,4 +1,5 @@
 <h1><%= @cat.name %></h1>
+<%= link_to "Back to index", cats_url %>
 
 <table>
   <tr>
@@ -15,19 +16,30 @@
   </tr>
 </table>
 
-<%= button_to "Delete Cat", cat_url(@cat), method: :delete %>
-<%= button_to "Make a reservation", new_cat_rental_request_url, method: :get %>
-
 <p>Reservations</p>
-<table>
+<%= link_to "Make a reservation", new_cat_rental_request_url %> </br>
 <% @cat.cat_rental_requests.each do |rental| %>
-  <tr>
-    <td>Start Date</td><td><%= rental.start_date %></td>
-  </tr>
-  <tr>
-    <td>End Date</td><td><%= rental.end_date %></td>
-  </tr>
-<% end %>
-</table>
 
-<%= link_to "Back to index", cats_url %>
+  <% if rental.pending? %>
+
+    <%= button_to "approve", approve_cat_rental_request_url(rental) %>
+    <%= button_to "deny", deny_cat_rental_request_url(rental) %>
+
+  <% end %>
+
+  <table>
+    <tr>
+      <td>Start Date</td><td><%= rental.start_date %></td>
+    </tr>
+    <tr>
+      <td>End Date</td><td><%= rental.end_date %></td>
+    </tr>
+    <tr>
+      <td>Status</td><td><%= rental.status %></td>
+    </tr>
+  </table>
+
+<% end %>
+
+<%= link_to "Edit Cat", edit_cat_url(@cat), method: :get %>
+<%= button_to "Delete Cat", cat_url(@cat), method: :delete %>

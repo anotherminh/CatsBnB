@@ -2,6 +2,8 @@
 
 <p> <%= link_to "Create a New Cat", new_cat_url %></p>
 
+<p><%= link_to "Make a reservation", new_cat_rental_request_url, method: :get %></p>
+
 <ul>
   <% @cats.each do |cat| %>
     <li>

@@ -1,3 +1,5 @@
+<%= link_to "Back to index", cats_url %>
+
 <form action="<%= @cat.persisted? ? cat_url(@cat) : cats_url %>" method="post">
   <% if @cat.persisted? %>
     <input type="hidden" name="_method" value="PATCH">
@@ -7,7 +9,9 @@
   <p><input type="text" name="cat[name]" value="<%= @cat.name %>"></p>
 
   <p>Birthdate:</p>
-  <p><input type="date" name="cat[birth_date]" value="<%= @cat.birth_date %>"</p>
+  <p><input type="date"
+            name="cat[birth_date]"
+            value="<%=@cat.birth_date %>"></p>
 
   <p><input type="radio"
             name="cat[sex]"
