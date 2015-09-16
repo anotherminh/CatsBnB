@@ -24,7 +24,26 @@ class CatRentalRequest < ActiveRecord::Base
 
   belongs_to :cat
 
+  def approve!
+    self.class.transaction do
+      self.update(status: "APPROVED")
+      overlapping_pending_requests.each do |request|
+        request.deny!
+      end
+    end
+  end
+
+  def deny!
+    self.update(status: "DENIED")
+  end
+
   private
+  def overlapping_pending_requests
+    overlapping_requests.select do |res|
+      res.status == "PENDING"
+    end
+  end
+
   def valid_dates
     if end_date - start_date < 0
       errors.add(:invalid_date, "End date must be after start date")

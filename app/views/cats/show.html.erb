@@ -16,6 +16,7 @@
 </table>
 
 <%= button_to "Delete Cat", cat_url(@cat), method: :delete %>
+<%= button_to "Make a reservation", new_cat_rental_request_url, method: :get %>
 
 <p>Reservations</p>
 <table>
@@ -28,3 +29,5 @@
   </tr>
 <% end %>
 </table>
+
+<%= link_to "Back to index", cats_url %>
