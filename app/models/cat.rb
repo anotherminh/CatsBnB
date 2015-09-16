@@ -18,4 +18,6 @@ class Cat < ActiveRecord::Base
   validates :birth_date, :color, :sex, :name, :description, presence: true
   validates :color, inclusion: { in: self.color }
   validates :sex, inclusion: { in: ['M', 'F'] }
+
+  has_many :cat_rental_requests, :dependent => :destroy
 end

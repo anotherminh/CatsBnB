@@ -41,6 +41,15 @@ class CatsController < ApplicationController
     end
   end
 
+  def destroy
+    @cat = Cat.find(params[:id])
+    if @cat.destroy
+      redirect_to cats_url
+    else
+      render json: @cat.errors.full_messages, status: :unprocessable_entity
+    end
+  end
+
   private
   def cat_params
     params.require(:cat).permit(:birth_date, :color, :name, :sex, :description)

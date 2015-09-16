@@ -14,3 +14,17 @@
     <td>Description</td><td> <%= @cat.description %> </td>
   </tr>
 </table>
+
+<%= button_to "Delete Cat", cat_url(@cat), method: :delete %>
+
+<p>Reservations</p>
+<table>
+<% @cat.cat_rental_requests.each do |rental| %>
+  <tr>
+    <td>Start Date</td><td><%= rental.start_date %></td>
+  </tr>
+  <tr>
+    <td>End Date</td><td><%= rental.end_date %></td>
+  </tr>
+<% end %>
+</table>

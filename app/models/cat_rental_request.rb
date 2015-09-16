@@ -20,8 +20,9 @@ class CatRentalRequest < ActiveRecord::Base
   validates :cat_id, :start_date, :end_date, :status, presence: true
   validates :status, inclusion: { in: self.status }
   validate :valid_dates
-  validate :overlapping_requests
+  validate :overlapping_approved_requests
 
+  belongs_to :cat
 
   private
   def valid_dates
@@ -34,7 +35,7 @@ class CatRentalRequest < ActiveRecord::Base
     params = {cat_id: self.cat_id, start: self.start_date, endd: self.end_date}
 
     overlaps = CatRentalRequest.where(
-      "(:id IS NULL OR id != :id) AND cat_id = :cat_id AND status = \'APPROVED\'",
+      "(:id IS NULL OR id != :id) AND cat_id = :cat_id ",
       { id: self.id, cat_id: self.cat_id }
     )
     .where(
@@ -42,7 +43,15 @@ class CatRentalRequest < ActiveRecord::Base
       {start: self.start_date, endd: self.end_date }
     )
 
-    unless overlaps.empty?
+    overlaps
+  end
+
+  def overlapping_approved_requests
+    approved_requests = overlapping_requests.select do |reservation|
+      reservation.status == "APPROVED"
+    end
+
+    unless approved_requests.empty?
       errors.add(:overlapping_requests, "Cat is already reserved for those dates")
     end
   end
